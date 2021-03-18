@@ -1,0 +1,60 @@
+{
+  "version": "0.1.0",
+  "name": "make-route-path",
+  "author": "kolengri",
+  "module": "dist/make-route-path.esm.js",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^4.10.1",
+    "@types/qs": "^6.9.6",
+    "husky": "^5.1.3",
+    "qs": "^6.10.0",
+    "rollup-plugin-filesize": "^9.1.1",
+    "size-limit": "^4.10.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.1.0",
+    "typescript": "^4.2.3"
+  },
+  "peerDependencies": {
+    "qs": "^6.10.0"
+  },
+  "engines": {
+    "node": ">=10"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "size-limit": [
+    {
+      "path": "dist/make-route-path.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/make-route-path.esm.js",
+      "limit": "10 KB"
+    }
+  ]
+}
