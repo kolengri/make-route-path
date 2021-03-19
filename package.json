@@ -21,6 +21,7 @@
     "src"
   ],
   "scripts": {
+    "prepublish": "yarn test",
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
