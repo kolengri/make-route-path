@@ -1,11 +1,21 @@
 {
-  "version": "0.9.0",
   "name": "make-route-path",
-  "author": "kolengri",
+  "version": "0.9.0",
+  "description": "Make type safe routes everywhere",
   "module": "dist/make-route-path.esm.js",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "author": "Grigoriy Kolenko <kolenko@me.com>",
+  "repository": "kolengri/make-route-path",
+  "keywords": [
+    "typescript",
+    "react-router",
+    "react-router-dom",
+    "routes",
+    "paths",
+    "next-router"
+  ],
   "files": [
     "dist",
     "src"
