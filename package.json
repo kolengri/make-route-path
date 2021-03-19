@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.9.0",
   "name": "make-route-path",
   "author": "kolengri",
   "module": "dist/make-route-path.esm.js",
@@ -14,6 +14,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
+    "test:watch": "yarn test --watch",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
@@ -21,18 +22,14 @@
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.10.1",
-    "@types/qs": "^6.9.6",
     "husky": "^5.1.3",
-    "qs": "^6.10.0",
     "rollup-plugin-filesize": "^9.1.1",
     "size-limit": "^4.10.1",
     "tsdx": "^0.14.1",
     "tslib": "^2.1.0",
     "typescript": "^4.2.3"
   },
-  "peerDependencies": {
-    "qs": "^6.10.0"
-  },
+  "peerDependencies": {},
   "engines": {
     "node": ">=10"
   },
@@ -56,5 +53,8 @@
       "path": "dist/make-route-path.esm.js",
       "limit": "10 KB"
     }
-  ]
+  ],
+  "dependencies": {
+    "path-to-regexp": "^6.2.0"
+  }
 }
