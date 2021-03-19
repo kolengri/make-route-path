@@ -77,3 +77,5 @@ export const makeRoutePath: MakeRoutePathFabric = (path, qsFunc) => {
 
   return fn;
 };
+
+export default makeRoutePath;
