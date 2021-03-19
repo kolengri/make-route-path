@@ -58,9 +58,10 @@ const makeCompilePath = (path: string) => {
 export const makeRoutePath: MakeRoutePathFabric = (path, qsFunc) => {
   if (typeof path !== 'string') throw new Error('Please path string as a path');
   const qsStringify = qsFunc ?? qs;
-  const fn: MakeRoutePathResultFn<any, any> = (params, query) => {
+  const fn: MakeRoutePathResultFn<any, any> = (params, query = {}) => {
     // Make query string
-    const queryString = query ? '?' + qsStringify(query) : '';
+    const queryString =
+      Object.keys(query).length > 0 ? '?' + qsStringify(query) : '';
 
     // Exclude unnecessary compile
     if (!params || path === '/') {
