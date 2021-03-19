@@ -11,6 +11,14 @@
 
 Make your router paths type safe and great!
 
+```bash
+npm install make-route-path --save
+```
+
+```bash
+yard add make-route-path
+```
+
 ```ts
 const productUrl = makeRoutePath<
   {
