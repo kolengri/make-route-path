@@ -4,9 +4,9 @@ import { qs } from './qs';
 type ParamsExt = Record<string, string | number>;
 type QueryExt = Record<string, any>;
 
-export type MakeRoutePathFn<Params, Query> = {
-  (params?: Params, query?: Query): string;
-};
+export type MakeRoutePathFn<Params, Query = any> = [Params] extends [never]
+  ? (params?: never | undefined, query?: Query) => string
+  : (params: Params, query?: Query) => string;
 
 export type MakeRoutePathResultFn<Params, Query> = MakeRoutePathFn<
   Params,
@@ -16,7 +16,7 @@ export type MakeRoutePathResultFn<Params, Query> = MakeRoutePathFn<
 };
 
 export type MakeRoutePathFabric = {
-  <Params extends ParamsExt, Query extends QueryExt = QueryExt>(
+  <Params extends ParamsExt = never, Query extends QueryExt = QueryExt>(
     path: string,
     qsFunc?: (params: Params) => string
   ): MakeRoutePathResultFn<Params, Query>;
@@ -75,7 +75,7 @@ export const makeRoutePath: MakeRoutePathFabric = (path, qsFunc) => {
   // Provide path to make access without function call
   fn.PATH = path;
 
-  return fn;
+  return fn as any;
 };
 
 export default makeRoutePath;
