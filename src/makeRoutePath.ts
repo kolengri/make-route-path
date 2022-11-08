@@ -1,25 +1,36 @@
 import { compile as pathCompile, PathFunction } from 'path-to-regexp';
 import { qs } from './qs';
 
-type ParamsExt = Record<string, string | number>;
 type QueryExt = Record<string, any>;
 
 export type MakeRoutePathFn<Params, Query = any> = [Params] extends [never]
   ? (params?: never | undefined, query?: Query) => string
   : (params: Params, query?: Query) => string;
 
-export type MakeRoutePathResultFn<Params, Query> = MakeRoutePathFn<
-  Params,
+export type MakeRoutePathResultFn<Path extends string, Query> = MakeRoutePathFn<
+  RouteParams<Path>,
   Query
 > & {
-  PATH: string;
+  PATH: Path;
 };
 
+type PathSegments<Path extends string> = Path extends `${infer SegmentA}/${infer SegmentB}`
+  ? ParamOnly<SegmentA> | PathSegments<SegmentB>
+  : ParamOnly<Path>;
+type ParamOnly<Segment extends string> = Segment extends `:${infer Param}`
+  ? Param
+  : never;
+
+type RouteParams<Path extends string> = {
+  [Key in PathSegments<Path>]: string | number;
+};
+
+
 export type MakeRoutePathFabric = {
-  <Params extends ParamsExt = never, Query extends QueryExt = QueryExt>(
-    path: string,
-    qsFunc?: (params: Params) => string
-  ): MakeRoutePathResultFn<Params, Query>;
+  <Path extends string = string, Query extends QueryExt = QueryExt>(
+    path: Path,
+    qsFunc?: (params: RouteParams<Path>) => string
+  ): MakeRoutePathResultFn<Path, Query>;
 };
 
 type Cache = {

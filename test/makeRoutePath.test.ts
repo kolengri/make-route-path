@@ -115,7 +115,7 @@ describe('Test makeRoutePath', () => {
   test.each(PARAMS_SCENARIOS)(
     'Test fabric with path: %s, pathResult %s, pathParams: %s and compileResult: %s',
     (path, pathResult, params, compileResult) => {
-      const url = makeRoutePath<{}>(path);
+      const url = makeRoutePath(path);
       expect(url.PATH).toBe(pathResult);
       expect(url(params)).toBe(compileResult);
     }
@@ -124,7 +124,7 @@ describe('Test makeRoutePath', () => {
   test.each(QUERY_SCENARIOS)(
     'Test fabric with path: %s, pathResult %s, pathParams: %s, queryParams: %s and compileResult: %s',
     (path, pathResult, params, queryParams, compileResult) => {
-      const url = makeRoutePath<{}>(path);
+      const url = makeRoutePath(path);
       expect(url.PATH).toBe(pathResult);
       expect(url(params, queryParams)).toBe(compileResult);
     }

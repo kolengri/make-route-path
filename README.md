@@ -11,6 +11,8 @@
 
 🧁 Make your router paths type safe and sweet again!
 
+With version 2.0.0 you no longer need to set the parameters manually. Thanks to the new version of the typescript it is enough to specify the path in the format `/path/:param` and all the required parameters will be prototyped
+
 The makeRoutePath function can be used to generate URLs to the routes. The package is based on `path-to-regexp` library.
 Results of compiling paths into regular expressions are cached, so there is no overhead on generating multiple paths with the same pattern.
 
@@ -49,13 +51,7 @@ import makeRoutePath from 'make-route-path';
 
 //...
 
-type ProductAttr = {
-  productId: number;
-  fromSection: string;
-  productSection: 'images' | 'description';
-};
-
-const productUrl = makeRoutePath<ProductAttr>(
+const productUrl = makeRoutePath(
   '/catalog/:productId/:fromSection/:productSection'
 );
 
@@ -64,20 +60,14 @@ productUrl.PATH; // /catalog/:productId/:fromSection/:productSection
 //...
 ```
 
-### Pattern and pattern attributes
+### Pattern attributes
 
 ```ts
 import makeRoutePath from 'make-route-path';
 
 //...
 
-type ProductAttr = {
-  productId: number;
-  fromSection: string;
-  productSection: 'images' | 'description';
-};
-
-const productUrl = makeRoutePath<ProductAttr>(
+const productUrl = makeRoutePath(
   '/catalog/:productId/:fromSection/:productSection'
 );
 
@@ -87,28 +77,23 @@ productUrl({ productId: '10', fromSection: 'a123', productSection: 'images' });
 //...
 ```
 
-### Pattern and pattern attributes with query string
+### Pattern attributes with query string
 
 ```ts
 import makeRoutePath from 'make-route-path';
 
 //...
 
-type ProductAttr = {
-  productId: number;
-  fromSection: string;
-  productSection: 'images' | 'description';
-};
-
 type ProductQuery = {
-  productId: number;
-  fromSection: string;
-  productSection: 'images' | 'description';
+  someQueryParam: string;
+  someAnotherQueryParam: string;
 };
 
-const productUrl = makeRoutePath<ProductAttr, ProductQuery>(
-  '/catalog/:productId/:fromSection/:productSection'
-);
+// Unfortunately, due to TS restrictions, it is necessary to copy the url as the first parameter in order to use a typed query string
+const productUrl = makeRoutePath<
+  '/catalog/:productId/:fromSection/:productSection',
+  ProductQuery
+>('/catalog/:productId/:fromSection/:productSection');
 
 // Make url with query params
 productUrl(
@@ -130,3 +115,7 @@ productUrl(
 ## Inspired by
 
 - React Router [generatePath](https://reactrouter.com/web/api/generatePath)
+
+## Thanks
+
+- Jan Šilhan [@rajzik](https://github.com/rajzik) - version 2.0.0
