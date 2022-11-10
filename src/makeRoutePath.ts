@@ -17,14 +17,31 @@ export type MakeRoutePathResultFn<Path extends string, Query> = MakeRoutePathFn<
 type PathSegments<Path extends string> = Path extends `${infer SegmentA}/${infer SegmentB}`
   ? ParamOnly<SegmentA> | PathSegments<SegmentB>
   : ParamOnly<Path>;
-type ParamOnly<Segment extends string> = Segment extends `:${infer Param}`
+
+type ParamOnly<Segment extends string> = Segment extends `:${string}(${string})` ?
+  never : Segment extends `:${infer Param}`
   ? Param
   : never;
 
-type RouteParams<Path extends string> = {
+type ParamValue<Segment extends string> = Segment extends `${infer Value}|${infer Rest}`
+  ? Value | ParamValue<Rest>
+  : Segment extends `${infer Value}`
+  ? `${Value}`
+  : never;
+
+
+type ParamWithValue<Segment extends string> = Segment extends `:${infer Param}(${infer Value})`
+  ? { [key in Param]: ParamValue<Value> }
+  : {};
+
+
+type PathSegmentsWithValue<Path extends string> = Path extends `${infer SegmentA}/${infer SegmentB}`
+  ? (ParamWithValue<SegmentA> & PathSegmentsWithValue<SegmentB>)
+  : ParamWithValue<Path>;
+
+type RouteParams<Path extends string> = PathSegmentsWithValue<Path> & {
   [Key in PathSegments<Path>]: string | number;
 };
-
 
 export type MakeRoutePathFabric = {
   <Path extends string = string, Query extends QueryExt = QueryExt>(
@@ -88,5 +105,6 @@ export const makeRoutePath: MakeRoutePathFabric = (path, qsFunc) => {
 
   return fn as any;
 };
+
 
 export default makeRoutePath;
