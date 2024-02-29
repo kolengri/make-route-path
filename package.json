@@ -1,6 +1,6 @@
 {
   "name": "make-route-path",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Make type safe routes everywhere",
   "module": "dist/make-route-path.esm.js",
   "license": "MIT",
@@ -44,7 +44,7 @@
     "tsdx/typescript": "^4.8.4"
   },
   "peerDependencies": {
-    "typescript": "^4.8.0"
+    "typescript": ">=4.8.0"
   },
   "engines": {
     "node": ">=10"
